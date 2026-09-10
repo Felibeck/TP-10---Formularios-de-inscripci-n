@@ -1,9 +1,7 @@
-import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { colors, fonts } from "../../theme";
-import Ticket from "../Ticket";
 
 function Campo({ label, error, children }) {
     return (
@@ -15,15 +13,13 @@ function Campo({ label, error, children }) {
     );
 }
 
-function Formulario()
+function Formulario({ onSubmit })
 {
     const opcionesTarjeta = [
         {label: "Gold", value: 'gold'},
         {label: "Platinum", value: 'platinum'},
         {label: "Centurion", value: 'centurion'}
     ]
-
-    const [ticket, setTicket] = useState(null);
 
     const { control, handleSubmit, formState: { errors }, reset } = useForm({
         defaultValues: {
@@ -38,34 +34,12 @@ function Formulario()
         },
     });
 
-    const closeTicket = () => {
-        setTicket(null);
-        reset({
-            nombre: '',
-            apellido: '',
-            email: '',
-            numPropiedades: '',
-            tipoTarjeta: '',
-            hectareas: '',
-            Patrimonio: '',
-            btc: '',
-        });
-    };
-
-    const onSubmit = (data) => {
-        const payload = {
-            ...data,
-            numPropiedades: Number(data.numPropiedades),
-            hectareas: Number(data.hectareas),
-            Patrimonio: Number(data.Patrimonio),
-            btc: Number(data.btc),
-        };
-        console.log(payload);
-        setTicket(payload);
+    const handleFormSubmit = (data) => {
+        onSubmit(data);
+        reset();
     };
 
     return (
-        <>
         <View style={styles.card}>
             <Text style={styles.cardTitle}>Formulario de Admisión</Text>
             <Text style={styles.cardSubtitle}>
@@ -225,7 +199,7 @@ function Formulario()
             </Campo>
 
             <Pressable
-                onPress={handleSubmit(onSubmit)}
+                onPress={handleSubmit(handleFormSubmit)}
                 style={({ pressed }) => [styles.button, pressed && styles.buttonPressed]}
             >
                 <Text style={styles.buttonText}>Certificar mi Éxito</Text>
@@ -235,9 +209,6 @@ function Formulario()
                 *Success Web no garantiza éxito real. Solo la ilusión de él.
             </Text>
         </View>
-
-        <Ticket visible={!!ticket} data={ticket} onClose={closeTicket} />
-        </>
     )
 }
 
