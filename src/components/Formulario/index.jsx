@@ -25,7 +25,7 @@ function Formulario()
 
     const [ticket, setTicket] = useState(null);
 
-    const { control, handleSubmit, formState: { errors } } = useForm({
+    const { control, handleSubmit, formState: { errors }, reset } = useForm({
         defaultValues: {
             nombre: '',
             apellido: '',
@@ -37,6 +37,20 @@ function Formulario()
             btc: '',
         },
     });
+
+    const closeTicket = () => {
+        setTicket(null);
+        reset({
+            nombre: '',
+            apellido: '',
+            email: '',
+            numPropiedades: '',
+            tipoTarjeta: '',
+            hectareas: '',
+            Patrimonio: '',
+            btc: '',
+        });
+    };
 
     const onSubmit = (data) => {
         const payload = {
@@ -222,7 +236,7 @@ function Formulario()
             </Text>
         </View>
 
-        <Ticket visible={!!ticket} data={ticket} onClose={() => setTicket(null)} />
+        <Ticket visible={!!ticket} data={ticket} onClose={closeTicket} />
         </>
     )
 }
