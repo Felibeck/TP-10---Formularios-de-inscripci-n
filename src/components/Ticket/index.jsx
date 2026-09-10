@@ -32,13 +32,13 @@ function Ticket({ visible, data, onClose }) {
             <ScrollView
                 style={styles.overlay}
                 contentContainerStyle={styles.overlayContent}
-            >
+            > 
                 <View style={[styles.card, { backgroundColor: tier.surface, borderColor: tier.accent }]}>
                     <View style={[styles.topBar, { backgroundColor: tier.accent }]} />
 
                     <Text style={styles.watermark}>$</Text>
                     <View style={styles.glare} />
-
+              
                     <Pressable style={styles.closeButton} onPress={onClose}>
                         <Text style={styles.closeText}>✕</Text>
                     </Pressable>

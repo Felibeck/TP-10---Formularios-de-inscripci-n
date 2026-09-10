@@ -1,38 +1,46 @@
+import { Keyboard, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import Formulario from './src/components/Formulario';
 import { colors, fonts } from './src/theme';
 
 export default function App() {
   return (
-    <View style={styles.root}>
-      <ScrollView
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
-      >
-        <View style={styles.hero}>
-          <Text style={styles.kicker}>MEMBRESÍA EXCLUSIVA</Text>
-          <Text style={styles.title}>SUCCESS WEB</Text>
-          <View style={styles.divider} />
-          <Text style={styles.tagline}>
-            El primer paso hacia la abundancia es completar todos los campos
-            obligatorios.
-          </Text>
+    <KeyboardAvoidingView
+      style={styles.flex}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.flex}>
+          <ScrollView
+            contentContainerStyle={styles.scrollContent}
+            showsVerticalScrollIndicator={false}
+            keyboardShouldPersistTaps="handled"
+          >
+            <View style={styles.hero}>
+              <Text style={styles.kicker}>MEMBRESÍA EXCLUSIVA</Text>
+              <Text style={styles.title}>SUCCESS WEB</Text>
+              <View style={styles.divider} />
+              <Text style={styles.tagline}>
+                El primer paso hacia la abundancia es completar todos los campos
+                obligatorios.
+              </Text>
+            </View>
+
+            <Formulario />
+
+            <Text style={styles.footer}>
+              © {new Date().getFullYear()} Success Web — El éxito, ahora en formulario.
+            </Text>
+          </ScrollView>
+          <StatusBar style="light" />
         </View>
-
-        <Formulario />
-
-        <Text style={styles.footer}>
-          © {new Date().getFullYear()} Success Web — El éxito, ahora en formulario.
-        </Text>
-      </ScrollView>
-      <StatusBar style="light" />
-    </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
-  root: {
+  flex: {
     flex: 1,
     backgroundColor: colors.background,
   },
